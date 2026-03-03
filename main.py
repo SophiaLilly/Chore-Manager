@@ -1,16 +1,16 @@
-# This is a sample Python script.
+from fastapi import FastAPI, APIRouter, Request, Response, HTTPException, Depends
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+from typing import Any, Dict, Optional
+import logging
+import os
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+app = FastAPI(title="Chore Manager API", version="0.1.0")
 
+api_router = APIRouter()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# TODOs:
+# - Add route handlers (GET/POST/PUT/DELETE) on api_router
+# - Add dependencies, auth, middleware, and event handlers
+# - Add tests and a requirements file (fastapi, pydantic, uvicorn)
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
