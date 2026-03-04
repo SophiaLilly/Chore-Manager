@@ -1,5 +1,4 @@
 # Partial Imports
-import hashlib
 from datetime import date, datetime
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -8,9 +7,10 @@ from pathlib import Path
 
 # Full Imports
 import frontmatter
+import hashlib
 import re
 
-VAULT_PATH = Path("vault")
+VAULT_PATH = Path("../vault")
 CHORES_PATH = VAULT_PATH / "chores"
 PEOPLE_PATH = VAULT_PATH / "people"
 DATA_PATH = VAULT_PATH / "data"
