@@ -1,4 +1,5 @@
 # Partial Imports
+import hashlib
 from datetime import date, datetime
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -17,6 +18,10 @@ VARIABLES_PATH = DATA_PATH / "variables"
 USERS_PATH = DATA_PATH / "users"
 
 security = HTTPBearer()
+
+
+def hash_pin(pin: str) -> str:
+    return hashlib.sha256(pin.encode()).hexdigest()
 
 
 def load_users():

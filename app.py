@@ -1,5 +1,5 @@
 # Local Imports
-from app_backend import get_today_file, parse_day, toggle_task, load_users, get_secret_key, get_algorithm
+from app_backend import get_today_file, parse_day, toggle_task, load_users, get_secret_key, get_algorithm, hash_pin
 
 # Partial Imports
 from datetime import datetime, UTC, timedelta
@@ -13,7 +13,6 @@ from uvicorn import Config, Server
 import asyncio
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
-PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI(title="Chore Manager API", version="0.1.0")
 app.add_middleware(
@@ -51,7 +50,7 @@ def login(data: dict):
     if name not in users:
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    if not PWD_CONTEXT.verify(pin, users[name]["pin_hash"]):
+    if not hash_pin(pin) == users[name]["pin_hash"]:
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     expire = datetime.now(UTC) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
