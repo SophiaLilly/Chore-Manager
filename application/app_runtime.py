@@ -1,5 +1,5 @@
 # Local Imports
-from .app_backend import get_today_file, parse_day, toggle_task, load_users, get_secret_key, get_algorithm, hash_pin
+from app_backend import get_today_file, parse_day, toggle_task, load_users, get_secret_key, get_algorithm, hash_pin
 
 # Partial Imports
 from datetime import datetime, UTC, timedelta
@@ -16,7 +16,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60
 app = FastAPI(title="Chore Manager API", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development; restrict in production
+    allow_origins=["https://sophialilly.github.io"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
