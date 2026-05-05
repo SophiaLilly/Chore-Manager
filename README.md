@@ -4,7 +4,7 @@ A lightweight self-hosted FastAPI backend that exposes a personal Obsidian vault
 
 This backend is designed to:
 
-* Authenticate users via PIN-based login
+* Authenticate users via UUID
 * Read and write Markdown files inside an Obsidian vault
 * Serve data to a static frontend (GitHub Pages)
 * Run locally and be exposed via Cloudflare Tunnel
@@ -18,7 +18,7 @@ For the purpose of:
 
 ## Architecture Overview
 
-Frontend (GitHub Pages)
+Frontend (GitHub Pages → Deployed to chores.lillywhite.dev)
 
 ↓
 
@@ -41,7 +41,6 @@ The vault is **not committed to this repository**.
 * Python 3.11+
 * FastAPI
 * Uvicorn
-* hashlib
 * python-frontmatter
 * Cloudflare Tunnel (deployment)
 
@@ -136,12 +135,16 @@ http://localhost:8000
 
 ```
 ---
-pin_hash: <hashed_pin>
+best_streak: 0
+current_streak: 0
+display_name: Test_User
+last_completion_date: '1970-01-01'
+last_streak_check: '1970-01-01'
+permissions:
+- admin
+uuid: 12345678-9abc-def1-2345-6789abcdef12
 ---
 ```
-
-* PINs are hashed using SHA-256 before storage
-* Backend validates hashes during login
 
 ---
 
@@ -162,12 +165,10 @@ cloudflared tunnel --url http://localhost:8000
 ## Security Notes
 
 * The Obsidian vault is not version controlled
-* Rate limiting should be enabled before public exposure
-* Only hashed PINs are stored
 * CORS must be configured for the frontend origin
 
 ---
 
 ## License
 
-Private project. Not licensed for redistribution.
+Public Open-Source Project. Do whatever you want with it.
