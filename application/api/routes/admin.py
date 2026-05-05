@@ -1,16 +1,16 @@
 # application/api/routes/admin.py
 
 # Local Internal Imports
-from application.api.deps import require_admin, get_user_or_404
+from api.deps import require_admin, get_user_or_404
 
 # Local External Imports
 from application.core.config import (
     TASKS_PATH,
     VAULT_PATH,
 )
-from application.file_io.task_io import load_all_tasks
-from application.models.schemas import UpdateRequest
-from application.services.task_service import reset_all_last_added
+from file_io.task_io import load_all_tasks
+from models.schemas import UpdateRequest
+from services.task_service import reset_all_last_added
 
 # Partial Imports
 from fastapi import (

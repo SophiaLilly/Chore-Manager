@@ -4,11 +4,11 @@
 from task_service import check_all_tasks_completed
 
 # Local External Imports
-from application.core.config import (
+from core.config import (
     USERS_PATH,
     CHORES_PATH,
 )
-from application.file_io.user_io import load_users
+from file_io.user_io import load_users
 
 # Partial Imports
 from datetime import (

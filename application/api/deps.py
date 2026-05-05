@@ -1,7 +1,7 @@
 # application/api/deps.py
 
 # Local External Imports
-from application.file_io.user_io import load_users
+from file_io.user_io import load_users
 
 # Partial Imports
 from fastapi import HTTPException

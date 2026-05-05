@@ -1,11 +1,8 @@
 # application/file_io/chores_io.py
 
 # Local External Imports
-from application.core.config import CHORES_PATH
-from application.utils.task_parsing import (
-    TASK_PATTERN,
-    TOGGLE_PATTERN,
-)
+from core.config import CHORES_PATH
+from util.task_parsing import TASK_PATTERN, TOGGLE_PATTERN
 
 # Partial Imports
 from datetime import date

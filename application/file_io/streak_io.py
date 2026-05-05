@@ -1,8 +1,8 @@
 # application/file_io/streak_io.py
 
 # Local External Imports
-from application.api.deps import get_user_or_404
-from application.core.config import USERS_PATH
+from api.deps import get_user_or_404
+from core.config import USERS_PATH
 
 # Full Imports
 import frontmatter

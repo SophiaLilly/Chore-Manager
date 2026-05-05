@@ -1,22 +1,22 @@
 # applications/api/routes/tasks.py
 
 # Local Internal Imports
-from application.api.deps import get_user_or_404
+from api.deps import get_user_or_404
 
 # Local External Imports
-from application.file_io.chores_io import (
+from file_io.chores_io import (
     get_today_file,
     parse_day,
     toggle_task,
 )
-from application.file_io.streak_io import get_user_streak
-from application.file_io.user_io import load_users
+from file_io.streak_io import get_user_streak
+from file_io.user_io import load_users
 
-from application.services.streak_service import (
+from services.streak_service import (
     evaluate_streak_for_new_day,
     update_user_streak,
 )
-from application.services.task_service import (
+from services.task_service import (
     check_all_tasks_completed,
     ensure_today_file,
 )

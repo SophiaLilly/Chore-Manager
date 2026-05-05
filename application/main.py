@@ -38,7 +38,7 @@ api.include_router(health.router)
 
 async def main():
     config = Config(
-        app="app.main:api",
+        app="application.main:api",
         host="0.0.0.0",
         log_level="info",
         port=8000,

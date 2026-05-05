@@ -4,13 +4,13 @@
 from user_service import is_user_eligible_for_task
 
 # Local External Imports
-from application.core.config import TASKS_PATH
-from application.file_io.chores_io import (
+from core.config import TASKS_PATH
+from file_io.chores_io import (
     get_today_file,
     parse_day,
     write_chores_to_file,
 )
-from application.utils.date_utils import parse_date
+from util.date_utils import parse_date
 
 
 # Partial Imports
