@@ -1,23 +1,25 @@
+# app_runtime.py
+
 # Local Imports
-import re
-
-import frontmatter
-
-from app_backend import parse_day, toggle_task, load_users, load_tasks, ensure_today_file, \
-    reset_all_last_added, load_all_tasks, check_all_tasks_completed, update_user_streak, get_user_streak, \
-    get_today_file, evaluate_streak_for_new_day
+from app_backend import *
 
 # Partial Imports
 from fastapi import Body, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from filelock import FileLock
 from pathlib import Path
+from pydantic import BaseModel
+from typing import Optional
 from uvicorn import Config, Server
 
 # Full Imports
 import asyncio
+import frontmatter
+import re
 
 
-VAULT_PATH = Path("../vault")
+BASE_PATH = Path(__file__).resolve().parent.parent
+VAULT_PATH = BASE_PATH / "vault"
 DATA_PATH = VAULT_PATH / "data"
 TASKS_PATH = DATA_PATH / "tasks"
 
@@ -35,6 +37,20 @@ api.add_middleware(
 )
 
 
+class TaskModel(BaseModel):
+    name: str
+    difficulty: int = 1
+    every_x_days: int = 1
+    allowed_days: Optional[list[int]] = None
+    last_added: Optional[str] = None
+
+
+class UpdateRequest(BaseModel):
+    uuid: str
+    index: int
+    task: TaskModel
+
+
 def get_user_or_404(uuid: str):
     users = load_users()
     user = users.get(uuid)
@@ -49,6 +65,13 @@ def require_admin(uuid: str):
     if "admin" not in permissions:
         raise HTTPException(status_code=403, detail="Admin permissions required")
     return user
+
+
+def save_tasks(tasks):
+    file = TASKS_PATH / "tasks.md"
+    post = frontmatter.load(file)
+    post.metadata["tasks"] = tasks
+    file.write_text(frontmatter.dumps(post))
 
 
 @api.get("/")
@@ -186,6 +209,33 @@ def delete_task(data: dict = Body(...)):
     file.write_text(frontmatter.dumps(post))
 
     return {"status": "ok"}
+
+
+@api.post("/admin/tasks/update")
+def update_task(req: UpdateRequest):
+    require_admin(req.uuid)
+
+    tasks = load_all_tasks()
+
+    if req.index < 0 or req.index >= len(tasks):
+        raise HTTPException(status_code=400, detail="Invalid index")
+
+    tasks[req.index] = {
+        "name": req.task.name,
+        "difficulty": req.task.difficulty,
+        "every_x_days": req.task.every_x_days,
+        "allowed_days": req.task.allowed_days,
+        "last_added": req.task.last_added
+    }
+
+    file = TASKS_PATH / "tasks.md"
+    with FileLock(str(file) + ".lock"):
+        post = frontmatter.load(file)
+        post.metadata["tasks"] = tasks
+        file.write_text(frontmatter.dumps(post))
+
+
+    return {"success": True}
 
 
 @api.post("/admin/reset_tasks")

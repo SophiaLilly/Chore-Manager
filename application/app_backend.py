@@ -1,3 +1,7 @@
+# app_backend.py
+
+# Local Imports
+
 # Partial Imports
 from datetime import date, datetime, timedelta
 from fastapi import HTTPException
@@ -10,8 +14,8 @@ import frontmatter
 import random
 import re
 
-
-VAULT_PATH = Path("../vault")
+BASE_PATH = Path(__file__).resolve().parent.parent
+VAULT_PATH = BASE_PATH / "vault"
 CHORES_PATH = VAULT_PATH / "chores"
 PEOPLE_PATH = VAULT_PATH / "people"
 DATA_PATH = VAULT_PATH / "data"
