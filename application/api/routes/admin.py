@@ -4,7 +4,7 @@
 from api.deps import require_admin, get_user_or_404
 
 # Local External Imports
-from application.core.config import (
+from core.config import (
     TASKS_PATH,
     VAULT_PATH,
 )

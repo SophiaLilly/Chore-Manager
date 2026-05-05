@@ -1,7 +1,7 @@
 # application/services/task_service.py
 
 # Local Internal Imports
-from user_service import is_user_eligible_for_task
+from services.user_service import is_user_eligible_for_task
 
 # Local External Imports
 from core.config import TASKS_PATH

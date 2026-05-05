@@ -1,7 +1,7 @@
 # application/services/streak_service.py
 
 # Local Internal Imports
-from task_service import check_all_tasks_completed
+from services.task_service import check_all_tasks_completed
 
 # Local External Imports
 from core.config import (
