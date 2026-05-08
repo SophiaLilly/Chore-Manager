@@ -28,7 +28,7 @@ import re
 router = APIRouter(prefix="/admin")
 
 
-@router.get("/admin/verify")
+@router.get("/verify")
 def verify_admin(uuid: str):
     user = get_user_or_404(uuid)
     permissions = user.get("permissions") or []
@@ -39,13 +39,13 @@ def verify_admin(uuid: str):
     }
 
 
-@router.get("/admin/tasks")
+@router.get("/tasks")
 def get_tasks(uuid: str):
     require_admin(uuid)
     return {"tasks": load_all_tasks()}
 
 
-@router.post("/admin/tasks/add")
+@router.post("/tasks/add")
 def add_task(data: dict = Body(...)):
     require_admin(data["uuid"])
 
@@ -61,7 +61,7 @@ def add_task(data: dict = Body(...)):
     return {"status": "ok"}
 
 
-@router.post("/admin/tasks/delete")
+@router.post("/tasks/delete")
 def delete_task(data: dict = Body(...)):
     require_admin(data["uuid"])
 
@@ -77,7 +77,7 @@ def delete_task(data: dict = Body(...)):
     return {"status": "ok"}
 
 
-@router.post("/admin/tasks/update")
+@router.post("/tasks/update")
 def update_task(req: UpdateRequest):
     require_admin(req.uuid)
 
@@ -104,14 +104,14 @@ def update_task(req: UpdateRequest):
     return {"success": True}
 
 
-@router.post("/admin/reset_tasks")
+@router.post("/reset_tasks")
 def reset_tasks(data: dict = Body(...)):
     require_admin(data["uuid"])
     reset_all_last_added()
     return {"status": "reset"}
 
 
-@router.get("/admin/todo")
+@router.get("/todo")
 def get_todo(uuid: str):
     require_admin(uuid)
 
@@ -132,7 +132,7 @@ def get_todo(uuid: str):
     return {"items": items}
 
 
-@router.post("/admin/todo/add")
+@router.post("/todo/add")
 def add_todo(data: dict = Body(...)):
     require_admin(data["uuid"])
 
@@ -143,7 +143,7 @@ def add_todo(data: dict = Body(...)):
     return {"status": "ok"}
 
 
-@router.post("/admin/todo/toggle")
+@router.post("/todo/toggle")
 def toggle_todo(data: dict = Body(...)):
     require_admin(data["uuid"])
 
@@ -165,7 +165,7 @@ def toggle_todo(data: dict = Body(...)):
     return {"status": "ok"}
 
 
-@router.post("/admin/todo/delete")
+@router.post("/todo/delete")
 def delete_todo(data: dict = Body(...)):
     require_admin(data["uuid"])
 

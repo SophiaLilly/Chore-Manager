@@ -25,3 +25,11 @@ def load_users():
             "unavailable_days": meta.get("unavailable_days", [])
         }
     return users
+
+
+def get_uuid_by_display_name(display_name: str):
+    users = load_users()
+    for uuid, user in users.items():
+        if user.get("display_name") == display_name:
+            return uuid
+    return None

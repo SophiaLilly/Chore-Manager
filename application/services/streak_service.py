@@ -4,6 +4,7 @@
 from services.task_service import check_all_tasks_completed
 
 # Local External Imports
+from api.deps import get_user_file
 from core.config import (
     USERS_PATH,
     CHORES_PATH,
@@ -23,13 +24,7 @@ import frontmatter
 
 
 def update_user_streak(user_uuid: str, completed: bool) -> dict:
-    users = load_users()
-    if user_uuid not in users:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    user_name = users[user_uuid]["name"]
-    user_file = USERS_PATH / f"{user_name}.md"
-
+    user_file = get_user_file(user_uuid)
     with FileLock(str(user_file) + ".lock"):
         post = frontmatter.load(user_file)
         metadata = post.metadata
