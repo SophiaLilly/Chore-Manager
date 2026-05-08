@@ -57,6 +57,7 @@ def get_today(uuid: str = Query(...)):
         "user": user["display_name"],
         "tasks": tasks.get(user["display_name"], []),
         "all_tasks": tasks,
+        "all_users": users,
         "is_admin": is_admin,
         "streak": {
             "current": streak["current_streak"],

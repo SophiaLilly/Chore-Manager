@@ -23,6 +23,8 @@ def load_users():
             "display_name": meta.get("display_name"),
             "permissions": meta.get("permissions"),
             "unavailable_days": meta.get("unavailable_days", []),
+            "current_streak": meta.get("current_streak", 0),
+            "best_streak": meta.get("best_streak", 0),
             "total_exp": meta.get("total_exp", 0),
         }
     return users
