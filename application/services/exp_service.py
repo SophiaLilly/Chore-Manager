@@ -20,7 +20,10 @@ def calculate_exp_for_task(task: dict) -> int:
 
 def get_user_exp(user_uuid: str) -> int:
     user_file = get_user_file(user_uuid)
-    return user_file.get("total_exp", 0)
+
+    post = frontmatter.load(user_file)
+
+    return post.metadata.get("total_exp", 0)
 
 
 def calculate_new_exp(current_exp: int, additional_exp: int) -> int:
