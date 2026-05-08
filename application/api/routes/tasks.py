@@ -74,11 +74,11 @@ def toggle(data: dict = Body(...)):
         all_tasks = load_all_tasks()
         task_dict = next((t for t in all_tasks if t.get("name") == result["task_name"]), None)
         if not task_dict:
-            return None
+            return {"status": "ok"}
 
         uuid = get_uuid_by_display_name(data["person"])
         if not uuid:
-            return None
+            return {"status": "ok"}
 
         if result["completed"]:
             exp_result = update_user_exp_for_task(uuid, task_dict)
@@ -113,23 +113,3 @@ def sync_streak(data: dict = Body(...)):
         "streak_status": result["status"]  # "active", "broken", "started", "already_done", "not_started"
     }
 
-
-@router.post("/sync-exp")
-def sync_exp(data: dict = Body(...)):
-    uuid = str(data.get("uuid", None))
-    if uuid is None:
-        raise HTTPException(status_code=400, detail="UUID is required")
-
-    user = get_user_or_404(uuid)
-    if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    task = ""  # get it from the toggle, this should aonly get called when a task is toggled.
-    # also maybe get when untoggle to remove the exp?
-    # yeah
-    result = update_user_exp_for_task(uuid, task)
-
-    return {
-        "status": "ok",
-        "total_exp": result["total_exp"],
-    }
