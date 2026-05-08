@@ -18,7 +18,7 @@ def calculate_exp_for_task(task: dict) -> int:
     return int(base_exp * difficulty)
 
 
-def get_user_exp(user_uuid: str) -> int:
+def get_user_exp(user_uuid: str):
     user_file = get_user_file(user_uuid)
 
     post = frontmatter.load(user_file)

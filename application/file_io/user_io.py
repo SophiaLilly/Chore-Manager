@@ -22,7 +22,8 @@ def load_users():
             "name": file.stem,
             "display_name": meta.get("display_name"),
             "permissions": meta.get("permissions"),
-            "unavailable_days": meta.get("unavailable_days", [])
+            "unavailable_days": meta.get("unavailable_days", []),
+            "total_exp": meta.get("total_exp", 0),
         }
     return users
 
