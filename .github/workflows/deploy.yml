@@ -1,0 +1,36 @@
+name: Deploy Chore Manager
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Update repository
+        run: |
+          cd /home/elodie/Chore-Manager
+          git fetch origin main
+          git reset --hard origin/main
+
+      - name: Install dependencies
+        run: |
+          cd /home/elodie/Chore-Manager
+          /home/elodie/Chore-Manager/.venv/bin/python -m pip install -r requirements.txt
+
+      - name: Restart backend
+        run: |
+          sudo systemctl restart chores-api-backend.service
+
+      - name: Verify backend
+        run: |
+          if [ "$(systemctl is-active chores-api-backend.service)" != "active" ]; then
+            echo "Chore Manager backend failed to start."
+            sudo systemctl status chores-api-backend.service --no-pager
+            exit 1
+          fi
+
+          echo "Chore Manager backend is active."
